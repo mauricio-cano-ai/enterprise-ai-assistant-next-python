@@ -27,7 +27,7 @@ apps/
 
 evals/  golden dataset, deterministic scorers, eval runner
 
-docs/   architecture and implementation/design records
+docs/   architecture and production-scaling notes
 ```
 
 ## Request flow
