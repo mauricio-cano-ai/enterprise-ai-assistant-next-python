@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install API
+        working-directory: apps/api
+        run: pip install -e ".[dev]"
+      - name: Ruff
+        working-directory: apps/api
+        run: python -m ruff check app tests
+      - name: Pytest
+        working-directory: apps/api
+        run: python -m pytest -q
+      - name: Deterministic evals
+        env:
+          PYTHONPATH: apps/api:evals
+        run: python evals/run_evals.py
+      - name: Eval scorer tests
+        env:
+          PYTHONPATH: apps/api:evals
+        run: python -m pytest evals/test_scorers.py -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build

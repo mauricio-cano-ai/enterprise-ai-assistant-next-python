@@ -1,0 +1,34 @@
+.worktrees/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+node_modules/
+.next/
+coverage/
+.env
+.env.local
+*.pyc
+
+# Local runtime/build artifacts
+**/.venv/
+**/node_modules/
+**/.next/
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+*.py[cod]
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Python packaging artifacts
+**/*.egg-info/
+
+# TypeScript incremental build cache
+**/*.tsbuildinfo
+
+# Internal development planning
+docs/superpowers/
